@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<definitions name="LoanApprovalService"
+        targetNamespace="http://soacourse.unsw.edu.au/loanapproval"
+        xmlns:tns="http://soacourse.unsw.edu.au/loanapproval"
+        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:approver="http://soacourse.unsw.edu.au/loanapprover">
+
+   <import namespace="http://soacourse.unsw.edu.au/loanapprover"
+             location="loanapprover.wsdl"/>
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="loanApprovalLinkType">
+        <plnk:role name="approver" portType="approver:loanApprovalPT"/>
+    </plnk:partnerLinkType>
+    
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="LoanApprovalServiceBinding" type="approver:loanApprovalPT">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="approve">
+    		<soap:operation
+    			soapAction="http://soacourse.unsw.edu.au/loanapproval/approve" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    </binding>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="LoanApprovalServiceProcess">
+    	<port name="LoanApprovalProcessPort" binding="tns:LoanApprovalServiceBinding">
+    		<soap:address location="http://localhost:6060/ode/processes/LoanApprovalServiceBinding" />
+    	</port>
+    </service>
+</definitions>

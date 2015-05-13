@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:loanapproval="http://soacourse.unsw.edu.au/loanapproval" xmlns:loanapprover.soacourse.unsw.edu.au="http://loanapprover.soacourse.unsw.edu.au/">
+  <process name="loanapproval:SimpleHomeLoan">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="loanapproval:LoanApprovalServiceProcess" port="LoanApprovalProcessPort"/>
+    </provide>
+    <invoke partnerLink="approver">
+      <service name="loanapprover.soacourse.unsw.edu.au:LoanApprovalPTImplService" port="LoanApprovalPTImplPort"/>
+    </invoke>
+  </process>
+</deploy>
